@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Galeri Pribadi Dava</title>
+    <title>Galeri Pribadi</title>
     
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -63,7 +63,7 @@
             <div class="relative">
                 <h1 class="text-3xl md:text-4xl font-bold mb-4 tracking-tight leading-tight">
                     <span class="bg-gradient-to-r from-gray-900 via-gray-700 to-gray-800 bg-clip-text text-transparent">
-                        Galeri Pribadi Dava
+                        Galeri Pribadi
                     </span>
                 </h1>
                 <!-- Simple underline -->
@@ -123,7 +123,7 @@
         <!-- Subtle Bottom Text -->
         <div class="absolute bottom-8 left-0 right-0 text-center">
             <p class="text-gray-400 text-sm font-light">
-                Professional Photography Gallery • Designed with ❤️
+                Professional Photography Gallery
             </p>
         </div>
     </div>
@@ -195,7 +195,6 @@
                         >
                             <option value="newest">Terbaru Dulu</option>
                             <option value="oldest">Terlama Dulu</option>
-                            <option value="most-liked">Paling Disukai</option>
                         </select>
                         <button onclick="clearAllFilters()" class="px-4 py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-xl transition-all shadow-md hover:shadow-lg text-sm font-medium border border-gray-300">
                             Reset Filter
@@ -216,7 +215,7 @@
             
             <!-- Empty State -->
             <div id="emptyState" class="hidden text-center py-20">
-                <div class="text-gray-300 text-8xl mb-8">🔍</div>
+                <div class="text-gray-300 text-8xl mb-8"></div>
                 <h3 class="text-gray-700 text-3xl font-bold mb-6">Tidak ada foto ditemukan</h3>
                 <p class="text-gray-500 mb-10 text-lg max-w-md mx-auto" id="emptyStateMessage">Coba ubah filter atau kata kunci pencarian</p>
                 <button onclick="clearAllFilters()" class="px-10 py-4 bg-gray-700 text-white rounded-2xl hover:bg-gray-800 transition-all shadow-lg transform hover:-translate-y-1 font-semibold text-lg">
