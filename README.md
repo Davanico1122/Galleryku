@@ -1,4 +1,4 @@
-# Personal Gallery Project - Replit.md
+# Personal Gallery Project
 
 ## Overview
 
