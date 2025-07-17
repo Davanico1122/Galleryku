@@ -257,7 +257,7 @@
                         </a>
                     </div>
                     <div class="text-gray-500 text-sm">
-                        <p>&copy; 2025 Galeri Pribadi Dava. Dibuat dengan ❤️</p>
+                        <p>&copy; 2025 Galeri Pribadi Dava. Dibuat dengan </p>
                     </div>
                 </div>
             </div>
@@ -272,46 +272,30 @@
         <!-- Main Lightbox Container -->
         <div class="relative w-full h-full flex items-center justify-center p-4">
             
-            <!-- Close Button - Fixed Top Right -->
-            <button 
-                id="closeLightbox" 
-                class="fixed top-6 right-6 z-60 w-12 h-12 bg-white hover:bg-gray-50 border-2 border-gray-300 hover:border-gray-400 rounded-full shadow-lg transition-all duration-200 flex items-center justify-center group"
-                title="Tutup (Esc)"
-                onclick="closeLightboxModal()"
-            >
-                <svg class="w-6 h-6 text-gray-600 group-hover:text-gray-800 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                </svg>
-            </button>
-            
-            <!-- Image Counter - Fixed Top Left -->
-            <div class="fixed top-6 left-6 z-60 bg-white border-2 border-gray-300 px-4 py-2 rounded-full shadow-lg">
-                <span id="imageCounter" class="text-sm font-medium text-gray-700">1 / 10</span>
-            </div>
-            
-            <!-- Previous Navigation Button - No Bounce -->
-            <button 
-                id="prevImage" 
-                class="fixed left-6 top-1/2 transform -translate-y-1/2 z-60 w-10 h-10 bg-white hover:bg-gray-50 border-2 border-gray-300 hover:border-gray-400 rounded-full shadow-md transition-colors duration-150 flex items-center justify-center"
-                title="Gambar Sebelumnya (←)"
-                onclick="showPreviousImage()"
-            >
-                <svg class="w-4 h-4 text-gray-600 hover:text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
-                </svg>
-            </button>
-            
-            <!-- Next Navigation Button - No Bounce -->
-            <button 
-                id="nextImage" 
-                class="fixed right-6 top-1/2 transform -translate-y-1/2 z-60 w-10 h-10 bg-white hover:bg-gray-50 border-2 border-gray-300 hover:border-gray-400 rounded-full shadow-md transition-colors duration-150 flex items-center justify-center"
-                title="Gambar Selanjutnya (→)"
-                onclick="showNextImage()"
-            >
-                <svg class="w-4 h-4 text-gray-600 hover:text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                </svg>
-            </button>
+        <!-- Previous Navigation Button -->
+<button 
+    id="prevImage" 
+    class="lightbox-nav-button fixed left-6 top-1/2 -translate-y-1/2 z-60"
+    title="Gambar Sebelumnya (←)"
+    onclick="showPreviousImage()"
+>
+    <svg class="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+    </svg>
+</button>
+
+<!-- Next Navigation Button -->
+<button 
+    id="nextImage" 
+    class="lightbox-nav-button fixed right-6 top-1/2 -translate-y-1/2 z-60"
+    title="Gambar Selanjutnya (→)"
+    onclick="showNextImage()"
+>
+    <svg class="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+    </svg>
+</button>
+
             
             <!-- Main Image Content Area -->
             <div class="flex flex-col items-center justify-center max-w-full max-h-full">
