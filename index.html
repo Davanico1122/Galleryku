@@ -272,29 +272,29 @@
         <!-- Main Lightbox Container -->
         <div class="relative w-full h-full flex items-center justify-center p-4">
             
-        <!-- Previous Navigation Button -->
-<button 
-    id="prevImage" 
-    class="lightbox-nav-button fixed left-6 top-1/2 -translate-y-1/2 z-60"
-    title="Gambar Sebelumnya (←)"
-    onclick="showPreviousImage()"
->
-    <svg class="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-    </svg>
-</button>
-
-<!-- Next Navigation Button -->
-<button 
-    id="nextImage" 
-    class="lightbox-nav-button fixed right-6 top-1/2 -translate-y-1/2 z-60"
-    title="Gambar Selanjutnya (→)"
-    onclick="showNextImage()"
->
-    <svg class="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-    </svg>
-</button>
+      <!-- Previous Navigation Button - No Bounce -->
+            <button 
+                id="prevImage" 
+                class="fixed left-6 top-1/2 transform -translate-y-1/2 z-60 w-10 h-10 bg-white hover:bg-gray-50 border-2 border-gray-300 hover:border-gray-400 rounded-full shadow-md transition-colors duration-150 flex items-center justify-center"
+                title="Gambar Sebelumnya (←)"
+                onclick="showPreviousImage()"
+            >
+                <svg class="w-4 h-4 text-gray-600 hover:text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                </svg>
+            </button>
+            
+            <!-- Next Navigation Button - No Bounce -->
+            <button 
+                id="nextImage" 
+                class="fixed right-6 top-1/2 transform -translate-y-1/2 z-60 w-10 h-10 bg-white hover:bg-gray-50 border-2 border-gray-300 hover:border-gray-400 rounded-full shadow-md transition-colors duration-150 flex items-center justify-center"
+                title="Gambar Selanjutnya (→)"
+                onclick="showNextImage()"
+            >
+                <svg class="w-4 h-4 text-gray-600 hover:text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
+            </button>
 
             
             <!-- Main Image Content Area -->
