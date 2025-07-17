@@ -2,7 +2,7 @@
 const imageData = [
     {
         id: 'img1',
-        src: 'https://via.placeholder.com/600x400/4F46E5/FFFFFF?text=Gunung+Bromo',
+        src: 'img/gambar1.png',
         caption: 'Pemandangan Gunung Bromo di Pagi Hari yang Menakjubkan',
         tag: 'Alam',
         uploadedAt: '2025-01-15T08:30:00Z',
@@ -12,7 +12,7 @@ const imageData = [
     },
     {
         id: 'img2',
-        src: 'https://via.placeholder.com/400x600/06B6D4/FFFFFF?text=Pantai+Kuta',
+        src: 'img/gambar1.png',
         caption: 'Sunset di Pantai Kuta Bali yang Memukau',
         tag: 'Alam',
         uploadedAt: '2025-01-10T14:20:00Z',
@@ -22,7 +22,7 @@ const imageData = [
     },
     {
         id: 'img3',
-        src: 'https://via.placeholder.com/600x400/059669/FFFFFF?text=Jakarta+Skyline',
+        src: 'img/gambar1.png',
         caption: 'Gedung Pencakar Langit Jakarta di Malam Hari',
         tag: 'Arsitektur',
         uploadedAt: '2025-01-20T18:45:00Z',
@@ -32,7 +32,7 @@ const imageData = [
     },
     {
         id: 'img4',
-        src: 'https://via.placeholder.com/400x600/DC2626/FFFFFF?text=Nasi+Gudeg',
+        src: 'img/gambar1.png',
         caption: 'Gudeg Yogyakarta Tradisional yang Lezat',
         tag: 'Kuliner',
         uploadedAt: '2025-01-05T16:15:00Z',
@@ -42,7 +42,7 @@ const imageData = [
     },
     {
         id: 'img5',
-        src: 'https://via.placeholder.com/500x500/7C3AED/FFFFFF?text=Keluarga+Bahagia',
+        src: 'img/gambar1.png',
         caption: 'Moment Kebahagiaan Bersama Keluarga di Taman',
         tag: 'Keluarga',
         uploadedAt: '2025-01-25T10:00:00Z',
@@ -52,7 +52,7 @@ const imageData = [
     },
     {
         id: 'img6',
-        src: 'https://via.placeholder.com/600x400/EA580C/FFFFFF?text=Road+Trip+Bandung',
+        src: 'img/gambar1.png',
         caption: 'Perjalanan Road Trip Menuju Lembang Bandung',
         tag: 'Travel',
         uploadedAt: '2025-01-12T13:30:00Z',
@@ -62,7 +62,7 @@ const imageData = [
     },
     {
         id: 'img7',
-        src: 'https://via.placeholder.com/400x600/0EA5E9/FFFFFF?text=Danau+Toba',
+        src: 'img/gambar1.png',
         caption: 'Keindahan Danau Toba dari Pulau Samosir',
         tag: 'Alam',
         uploadedAt: '2025-01-22T11:15:00Z',
@@ -72,7 +72,7 @@ const imageData = [
     },
     {
         id: 'img8',
-        src: 'https://via.placeholder.com/600x400/15803D/FFFFFF?text=Candi+Borobudur',
+        src: 'img/gambar1.png',
         caption: 'Sunrise di Candi Borobudur yang Menawan',
         tag: 'Arsitektur',
         uploadedAt: '2025-01-18T16:45:00Z',
@@ -82,7 +82,7 @@ const imageData = [
     },
     {
         id: 'img9',
-        src: 'https://via.placeholder.com/500x500/BE123C/FFFFFF?text=Rendang+Padang',
+        src: 'img/gambar1.png',
         caption: 'Rendang Padang Autentik yang Menggugah Selera',
         tag: 'Kuliner',
         uploadedAt: '2025-01-08T09:20:00Z',
@@ -92,7 +92,7 @@ const imageData = [
     },
     {
         id: 'img10',
-        src: 'https://via.placeholder.com/400x600/7C2D12/FFFFFF?text=Ulang+Tahun',
+        src: 'img/gambar1.png',
         caption: 'Perayaan Ulang Tahun ke-25 Bersama Orang Terkasih',
         tag: 'Keluarga',
         uploadedAt: '2025-01-14T14:30:00Z',
