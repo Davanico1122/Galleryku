@@ -1,4 +1,4 @@
-// Data gambar - Ganti dengan gambar Anda sendiri
+// Data gambar - Menggunakan gambar lokal di folder img/
 const imageData = [
     {
         id: 'img1',
@@ -12,7 +12,7 @@ const imageData = [
     },
     {
         id: 'img2',
-        src: 'img/gambar1.png',
+        src: 'img/gambar2.png',
         caption: 'Sunset di Pantai Kuta Bali yang Memukau',
         tag: 'Alam',
         uploadedAt: '2025-01-10T14:20:00Z',
@@ -22,7 +22,7 @@ const imageData = [
     },
     {
         id: 'img3',
-        src: 'img/gambar1.png',
+        src: 'img/gambar3.png',
         caption: 'Gedung Pencakar Langit Jakarta di Malam Hari',
         tag: 'Arsitektur',
         uploadedAt: '2025-01-20T18:45:00Z',
@@ -32,7 +32,7 @@ const imageData = [
     },
     {
         id: 'img4',
-        src: 'img/gambar1.png',
+        src: 'img/gambar4.png',
         caption: 'Gudeg Yogyakarta Tradisional yang Lezat',
         tag: 'Kuliner',
         uploadedAt: '2025-01-05T16:15:00Z',
@@ -42,7 +42,7 @@ const imageData = [
     },
     {
         id: 'img5',
-        src: 'img/gambar1.png',
+        src: 'img/gambar5.png',
         caption: 'Moment Kebahagiaan Bersama Keluarga di Taman',
         tag: 'Keluarga',
         uploadedAt: '2025-01-25T10:00:00Z',
@@ -52,7 +52,7 @@ const imageData = [
     },
     {
         id: 'img6',
-        src: 'img/gambar1.png',
+        src: 'img/gambar6.png',
         caption: 'Perjalanan Road Trip Menuju Lembang Bandung',
         tag: 'Travel',
         uploadedAt: '2025-01-12T13:30:00Z',
@@ -62,7 +62,7 @@ const imageData = [
     },
     {
         id: 'img7',
-        src: 'img/gambar1.png',
+        src: 'img/gambar7.png',
         caption: 'Keindahan Danau Toba dari Pulau Samosir',
         tag: 'Alam',
         uploadedAt: '2025-01-22T11:15:00Z',
@@ -72,7 +72,7 @@ const imageData = [
     },
     {
         id: 'img8',
-        src: 'img/gambar1.png',
+        src: 'img/gambar8.png',
         caption: 'Sunrise di Candi Borobudur yang Menawan',
         tag: 'Arsitektur',
         uploadedAt: '2025-01-18T16:45:00Z',
@@ -82,7 +82,7 @@ const imageData = [
     },
     {
         id: 'img9',
-        src: 'img/gambar1.png',
+        src: 'img/gambar9.png',
         caption: 'Rendang Padang Autentik yang Menggugah Selera',
         tag: 'Kuliner',
         uploadedAt: '2025-01-08T09:20:00Z',
@@ -92,7 +92,7 @@ const imageData = [
     },
     {
         id: 'img10',
-        src: 'img/gambar1.png',
+        src: 'img/gambar10.png',
         caption: 'Perayaan Ulang Tahun ke-25 Bersama Orang Terkasih',
         tag: 'Keluarga',
         uploadedAt: '2025-01-14T14:30:00Z',
@@ -106,7 +106,7 @@ const imageData = [
 let filteredImages = [...imageData];
 let currentFilter = 'All';
 let currentLightboxIndex = 0;
-let favorites = JSON.parse(localStorage.getItem('galleryFavorites')) || [];
+let scrollObserver;
 
 // DOM Elements
 const loadingScreen = document.getElementById('loadingScreen');
@@ -127,56 +127,43 @@ const nextImage = document.getElementById('nextImage');
 const imageCounter = document.getElementById('imageCounter');
 const scrollToTop = document.getElementById('scrollToTop');
 const totalImages = document.getElementById('totalImages');
+// const totalLikes = document.getElementById('totalLikes'); // Removed favorites
 const activeCategory = document.getElementById('activeCategory');
 const currentFilterDisplay = document.getElementById('currentFilter');
 
-// Fungsi untuk menampilkan loading screen
+// Enhanced Loading Screen Function - 3 seconds duration
 function showLoadingScreen() {
     loadingScreen.style.display = 'flex';
+    loadingScreen.style.opacity = '1';
     mainContent.style.opacity = '0';
     
-    // Sembunyikan loading screen setelah 1 detik saja
+    // Update loading screen statistics with real data
+    const totalCategoriesElement = document.getElementById('totalCategories');
+    if (totalCategoriesElement && imageData) {
+        const uniqueCategories = [...new Set(imageData.map(img => img.tag))];
+        totalCategoriesElement.textContent = uniqueCategories.length;
+    }
+    
+    // Add loading animation class for progress bar
+    const progressBar = document.querySelector('.loading-bar');
+    if (progressBar) {
+        progressBar.style.animation = 'loadingProgress 3s ease-in-out forwards, gradientShift 2s ease-in-out infinite';
+    }
+    
+    // Enhanced fade out after 3 seconds
     setTimeout(() => {
         loadingScreen.style.opacity = '0';
+        loadingScreen.style.transform = 'scale(1.05)';
+        
         setTimeout(() => {
             loadingScreen.style.display = 'none';
             mainContent.style.opacity = '1';
-        }, 300);
-    }, 1000);
+            mainContent.style.transform = 'scale(1)';
+        }, 500);
+    }, 3000);
 }
 
-// Favorite Functions
-function toggleFavorite(imageId) {
-    const index = favorites.indexOf(imageId);
-    if (index > -1) {
-        favorites.splice(index, 1);
-    } else {
-        favorites.push(imageId);
-    }
-    localStorage.setItem('galleryFavorites', JSON.stringify(favorites));
-    
-    // Update hanya tombol favorit yang diklik tanpa refresh
-    updateFavoriteButton(imageId);
-    updateStatistics();
-}
-
-function isFavorite(imageId) {
-    return favorites.includes(imageId);
-}
-
-// Fungsi untuk update tombol favorit tanpa refresh
-function updateFavoriteButton(imageId) {
-    const favoriteButtons = document.querySelectorAll(`[onclick*="${imageId}"]`);
-    favoriteButtons.forEach(button => {
-        const svg = button.querySelector('svg');
-        const isFav = isFavorite(imageId);
-        
-        if (svg) {
-            svg.className = `w-5 h-5 ${isFav ? 'text-red-500 fill-current' : 'text-gray-400 hover:text-red-500'}`;
-            svg.setAttribute('fill', isFav ? 'currentColor' : 'none');
-        }
-    });
-}
+// Favorite system removed for cleaner interface
 
 // Scroll Functions
 function initScrollToTop() {
@@ -195,7 +182,6 @@ function initScrollToTop() {
     });
 }
 
-// Clear all filters function
 function clearAllFilters() {
     currentFilter = 'All';
     searchInput.value = '';
@@ -204,39 +190,38 @@ function clearAllFilters() {
     applyFilters();
 }
 
-// Intersection Observer for scroll animations
 function initScrollAnimations() {
-    const observer = new IntersectionObserver((entries) => {
+    scrollObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                entry.target.classList.add('animate-fade-in');
-                observer.unobserve(entry.target);
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+                scrollObserver.unobserve(entry.target);
             }
         });
-    }, { threshold: 0.1, rootMargin: '50px' });
-
-    // Observe gallery items when they're rendered
-    return observer;
+    }, { 
+        threshold: 0.1, 
+        rootMargin: '50px' 
+    });
 }
 
-// Fungsi untuk mendapatkan semua tag unik
+// Filter Functions
 function getUniqueTags() {
-    const baseTags = imageData.map(img => img.tag);
+    const baseTags = [...new Set(imageData.map(img => img.tag))];
     const orientationTags = ['Portrait', 'Landscape', 'Square'];
-    return ['All', 'Favorit', ...new Set(baseTags), ...orientationTags];
+    return ['All', ...baseTags, ...orientationTags];
 }
 
-// Fungsi untuk membuat tombol filter tag
 function createFilterTags() {
     const tags = getUniqueTags();
     filterTags.innerHTML = '';
     
     tags.forEach(tag => {
         const button = document.createElement('button');
-        button.className = `px-6 py-3 rounded-2xl text-sm font-semibold transition-all duration-300 transform shadow-md hover:scale-105 ${
+        button.className = `px-6 py-3 rounded-2xl text-sm font-semibold transition-all duration-300 transform shadow-md hover:scale-105 hover:shadow-lg ${
             tag === currentFilter 
-                ? 'bg-gray-800 text-white shadow-lg scale-105' 
-                : 'bg-white text-gray-700 border-2 border-gray-300 hover:border-gray-500 hover:shadow-lg'
+                ? 'bg-gray-800 text-white shadow-xl scale-105 ring-2 ring-gray-300' 
+                : 'bg-white text-gray-700 border-2 border-gray-300 hover:border-gray-500 hover:bg-gray-50'
         }`;
         button.textContent = tag;
         button.onclick = () => filterByTag(tag);
@@ -244,20 +229,24 @@ function createFilterTags() {
     });
 }
 
-// Fungsi untuk memfilter berdasarkan tag
 function filterByTag(tag) {
     currentFilter = tag;
-    createFilterTags(); // Update tombol aktif
+    createFilterTags();
     applyFilters();
 }
 
-// Fungsi untuk mengurutkan gambar
 function sortImages(images, sortType) {
     return [...images].sort((a, b) => {
+        if (sortType === 'most-liked') {
+            const likesA = isFavorite(a.id) ? 1 : 0;
+            const likesB = isFavorite(b.id) ? 1 : 0;
+            if (likesA !== likesB) return likesB - likesA;
+        }
+        
         const dateA = new Date(a.uploadedAt);
         const dateB = new Date(b.uploadedAt);
         
-        if (sortType === 'newest') {
+        if (sortType === 'newest' || sortType === 'most-liked') {
             return dateB - dateA;
         } else {
             return dateA - dateB;
@@ -265,7 +254,6 @@ function sortImages(images, sortType) {
     });
 }
 
-// Fungsi untuk mencari gambar
 function searchImages(images, searchTerm) {
     if (!searchTerm) return images;
     
@@ -277,7 +265,6 @@ function searchImages(images, searchTerm) {
     );
 }
 
-// Fungsi untuk memformat tanggal
 function formatDate(dateString) {
     const date = new Date(dateString);
     return date.toLocaleDateString('id-ID', {
@@ -287,14 +274,10 @@ function formatDate(dateString) {
     });
 }
 
-// Fungsi untuk menerapkan semua filter
 function applyFilters() {
     let result = [...imageData];
     
-    // Filter berdasarkan tag khusus
-    if (currentFilter === 'Favorit') {
-        result = result.filter(img => isFavorite(img.id));
-    } else if (currentFilter === 'Portrait') {
+    if (currentFilter === 'Portrait') {
         result = result.filter(img => img.orientation === 'portrait');
     } else if (currentFilter === 'Landscape') {
         result = result.filter(img => img.orientation === 'landscape');
@@ -304,11 +287,9 @@ function applyFilters() {
         result = result.filter(img => img.tag === currentFilter);
     }
     
-    // Filter berdasarkan pencarian
     const searchTerm = searchInput.value.trim();
     result = searchImages(result, searchTerm);
     
-    // Urutkan
     const sortType = sortSelect.value;
     result = sortImages(result, sortType);
     
@@ -317,138 +298,124 @@ function applyFilters() {
     renderGallery();
 }
 
-// Update statistics display
 function updateStatistics() {
-    totalImages.textContent = `Total Gambar: ${imageData.length}`;
-    activeCategory.textContent = `Kategori Aktif: ${currentFilter}`;
+    totalImages.textContent = `Total: ${imageData.length} foto`;
+    activeCategory.textContent = `Kategori: ${currentFilter}`;
     imageCount.textContent = filteredImages.length;
+    
+    // Update categories count in header
+    const uniqueCategories = [...new Set(imageData.map(img => img.tag))];
+    const headerCategories = document.getElementById('headerCategories');
+    if (headerCategories) {
+        headerCategories.textContent = `${uniqueCategories.length} kategori`;
+    }
     
     const searchTerm = searchInput.value.trim();
     if (searchTerm) {
         currentFilterDisplay.classList.remove('hidden');
-        currentFilterDisplay.textContent = `Filter: "${searchTerm}"`;
+        currentFilterDisplay.textContent = `Pencarian: "${searchTerm}"`;
     } else {
         currentFilterDisplay.classList.add('hidden');
     }
     
-    // Update empty state message
     if (filteredImages.length === 0) {
         if (searchTerm) {
             emptyStateMessage.textContent = `Tidak ada gambar ditemukan untuk "${searchTerm}"`;
-        } else if (currentFilter === 'Favorit') {
-            emptyStateMessage.textContent = 'Belum ada gambar favorit. Klik ❤️ pada gambar untuk menambahkan.';
         } else {
             emptyStateMessage.textContent = 'Tidak ada gambar ditemukan dengan filter ini.';
         }
     }
 }
 
-// Fungsi untuk membuat card gambar
+// Gallery Card Creation - Optimized for Grid Layout
 function createImageCard(image, index) {
     const card = document.createElement('div');
-    card.className = 'group cursor-pointer transform hover:-translate-y-2 hover:shadow-2xl transition-all duration-300 break-inside-avoid mb-6 opacity-0 translate-y-4';
-    
-    const isFav = isFavorite(image.id);
+    card.className = 'gallery-item opacity-0 translate-y-4 transition-all duration-500 h-fit';
+    card.style.transitionDelay = `${index * 50}ms`;
     
     card.innerHTML = `
-        <div class="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 relative border border-gray-100">
-            <!-- Favorite Button -->
-            <button 
-                class="favorite-btn absolute top-4 right-4 z-10 w-10 h-10 bg-white bg-opacity-95 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-opacity-100 transition-all transform hover:scale-110 shadow-md"
-                onclick="event.stopPropagation(); toggleFavorite('${image.id}')"
-            >
-                <svg class="w-5 h-5 ${isFav ? 'text-red-500 fill-current' : 'text-gray-400 hover:text-red-500'}" viewBox="0 0 24 24" fill="${isFav ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2">
-                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
-                </svg>
-            </button>
-            
-            <div class="overflow-hidden">
+        <div class="group cursor-pointer bg-white rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-all duration-300 border border-gray-200 hover:border-gray-300 transform hover:-translate-y-1 flex flex-col h-full">
+            <div class="relative overflow-hidden bg-gray-50 flex-shrink-0">
                 <img 
                     src="${image.src}" 
                     alt="${image.caption}"
-                    class="w-full h-auto group-hover:scale-105 transition-transform duration-500"
+                    class="w-full h-48 group-hover:scale-105 transition-transform duration-500 object-cover"
                     loading="lazy"
-                    onerror="this.style.backgroundColor='#f3f4f6'; this.style.minHeight='200px'; this.alt='Gambar tidak dapat dimuat';"
                 >
-            </div>
-            <div class="p-5">
-                <h3 class="font-semibold text-gray-900 text-base line-clamp-2 mb-3 leading-snug">${image.caption}</h3>
-                <div class="flex justify-between items-center text-xs text-gray-500 mb-2">
-                    <span class="bg-gradient-to-r from-gray-100 to-gray-200 text-gray-700 px-3 py-1 rounded-full font-medium">${image.tag}</span>
-                    <span class="font-medium">${formatDate(image.uploadedAt)}</span>
+                
+                <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-10 transition-all duration-300 flex items-center justify-center">
+                    <div class="opacity-0 group-hover:opacity-100 transform scale-75 group-hover:scale-100 transition-all duration-200">
+                        <div class="bg-white bg-opacity-90 backdrop-blur-sm rounded-full p-2 shadow-md">
+                            <svg class="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                            </svg>
+                        </div>
+                    </div>
                 </div>
-                <div class="text-xs text-gray-400 font-medium">
-                    ${image.width} × ${image.height} • ${image.orientation}
+            </div>
+            
+            <div class="p-4">
+                <h3 class="font-medium text-gray-900 text-base mb-2 line-clamp-2 leading-snug group-hover:text-gray-700 transition-colors">${image.caption}</h3>
+                
+                <div class="flex items-center justify-between mb-3">
+                    <span class="inline-flex items-center px-2 py-1 rounded-lg text-xs font-medium bg-gray-100 text-gray-600 border border-gray-200">
+                        ${image.tag}
+                    </span>
+                    <span class="text-xs text-gray-500">${image.orientation}</span>
+                </div>
+                
+                <div class="flex items-center justify-between text-xs text-gray-500">
+                    <span class="flex items-center gap-1">
+                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                        </svg>
+                        ${formatDate(image.uploadedAt)}
+                    </span>
+                    <span class="flex items-center gap-1">
+                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 002 2v12a2 2 0 002 2z"></path>
+                        </svg>
+                        ${image.width}×${image.height}
+                    </span>
                 </div>
             </div>
         </div>
     `;
     
-    // Event listener untuk membuka lightbox
-    card.onclick = () => openLightbox(index);
+    card.addEventListener('click', () => {
+        openLightbox(index);
+    });
     
     return card;
 }
 
-// Fungsi untuk render galeri
 function renderGallery() {
     galleryGrid.innerHTML = '';
     
     if (filteredImages.length === 0) {
-        galleryGrid.style.display = 'none';
-        emptyState.style.display = 'block';
+        emptyState.classList.remove('hidden');
+        return;
     } else {
-        galleryGrid.style.display = 'block';
-        galleryGrid.style.columnCount = '';
-        emptyState.style.display = 'none';
+        emptyState.classList.add('hidden');
+    }
+    
+    filteredImages.forEach((image, index) => {
+        const card = createImageCard(image, index);
+        galleryGrid.appendChild(card);
         
-        // Set masonry columns based on screen size
-        const screenWidth = window.innerWidth;
-        if (screenWidth < 640) {
-            galleryGrid.className = 'columns-1 gap-4 space-y-4';
-        } else if (screenWidth < 768) {
-            galleryGrid.className = 'columns-2 gap-4 space-y-4';
-        } else if (screenWidth < 1280) {
-            galleryGrid.className = 'columns-3 gap-4 space-y-4';
-        } else {
-            galleryGrid.className = 'columns-4 gap-4 space-y-4';
+        if (scrollObserver) {
+            scrollObserver.observe(card);
         }
         
-        filteredImages.forEach((image, index) => {
-            const card = createImageCard(image, index);
-            galleryGrid.appendChild(card);
-            
-            // Scroll reveal animation
-            setTimeout(() => {
-                card.style.opacity = '1';
-                card.style.transform = 'translateY(0)';
-                card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-            }, index * 50);
-        });
-    }
+        setTimeout(() => {
+            card.style.opacity = '1';
+            card.style.transform = 'translateY(0)';
+        }, index * 50 + 100);
+    });
 }
 
-// Fungsi untuk menyesuaikan layout grid berdasarkan ukuran layar
-function adjustGridLayout() {
-    const screenWidth = window.innerWidth;
-    
-    // Reset grid style
-    galleryGrid.style.columnCount = '';
-    galleryGrid.style.display = 'grid';
-    
-    // Tentukan jumlah kolom berdasarkan lebar layar
-    if (screenWidth < 640) {
-        galleryGrid.style.gridTemplateColumns = '1fr';
-    } else if (screenWidth < 768) {
-        galleryGrid.style.gridTemplateColumns = 'repeat(2, 1fr)';
-    } else if (screenWidth < 1280) {
-        galleryGrid.style.gridTemplateColumns = 'repeat(3, 1fr)';
-    } else {
-        galleryGrid.style.gridTemplateColumns = 'repeat(4, 1fr)';
-    }
-}
-
-// Lightbox Functions
+// LIGHTBOX FUNCTIONS - TEMA TERANG CLEAN
 function openLightbox(index) {
     currentLightboxIndex = index;
     const image = filteredImages[index];
@@ -456,102 +423,105 @@ function openLightbox(index) {
     lightboxImage.src = image.src;
     lightboxImage.alt = image.caption;
     
+    // Update caption dengan tema terang
     lightboxCaption.innerHTML = `
-        <h3 class="font-medium mb-2 text-lg">${image.caption}</h3>
-        <div class="flex justify-center gap-6 text-sm opacity-90">
-            <span>#${image.tag}</span>
-            <span>${formatDate(image.uploadedAt)}</span>
-            <span>${image.width} × ${image.height}</span>
+        <div class="text-center">
+            <h3 class="text-lg font-semibold mb-3 text-gray-900">${image.caption}</h3>
+            <div class="flex flex-wrap justify-center gap-4 text-sm text-gray-600">
+                <span class="flex items-center gap-2 bg-gray-50 px-3 py-2 rounded-lg border">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path>
+                    </svg>
+                    ${image.tag}
+                </span>
+                <span class="flex items-center gap-2 bg-gray-50 px-3 py-2 rounded-lg border">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                    </svg>
+                    ${formatDate(image.uploadedAt)}
+                </span>
+                <span class="flex items-center gap-2 bg-gray-50 px-3 py-2 rounded-lg border">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 002 2v12a2 2 0 002 2z"></path>
+                    </svg>
+                    ${image.width} × ${image.height}
+                </span>
+            </div>
         </div>
     `;
     
     imageCounter.textContent = `${index + 1} / ${filteredImages.length}`;
     
-    // Show/hide navigation buttons
-    prevImage.style.display = index > 0 ? 'flex' : 'none';
-    nextImage.style.display = index < filteredImages.length - 1 ? 'flex' : 'none';
-    
+    // Show lightbox dengan fade animation
     lightbox.classList.remove('hidden');
+    setTimeout(() => {
+        lightbox.classList.add('opacity-100');
+        lightbox.classList.remove('opacity-0');
+    }, 10);
+    
     document.body.style.overflow = 'hidden';
     
-    setTimeout(() => {
-        lightbox.style.opacity = '1';
-    }, 10);
+    // Update navigation visibility
+    prevImage.style.display = filteredImages.length > 1 ? 'flex' : 'none';
+    nextImage.style.display = filteredImages.length > 1 ? 'flex' : 'none';
 }
 
-function navigateLightbox(direction) {
-    const newIndex = currentLightboxIndex + direction;
-    if (newIndex >= 0 && newIndex < filteredImages.length) {
-        openLightbox(newIndex);
-    }
-}
-
-function handleKeyboardNavigation(e) {
-    if (!lightbox.classList.contains('hidden')) {
-        switch(e.key) {
-            case 'ArrowLeft':
-                e.preventDefault();
-                navigateLightbox(-1);
-                break;
-            case 'ArrowRight':
-                e.preventDefault();
-                navigateLightbox(1);
-                break;
-            case 'Escape':
-                e.preventDefault();
-                closeLightboxFunction();
-                break;
-        }
-    }
-}
-
-// Fungsi untuk menutup lightbox
-function closeLightboxFunction() {
-    lightbox.style.opacity = '0';
+function closeLightboxModal() {
+    lightbox.classList.add('opacity-0');
+    lightbox.classList.remove('opacity-100');
+    
     setTimeout(() => {
         lightbox.classList.add('hidden');
         document.body.style.overflow = 'auto';
     }, 300);
 }
 
-// Event Listeners
-searchInput.addEventListener('input', applyFilters);
-sortSelect.addEventListener('change', applyFilters);
-closeLightbox.addEventListener('click', closeLightboxFunction);
-prevImage.addEventListener('click', () => navigateLightbox(-1));
-nextImage.addEventListener('click', () => navigateLightbox(1));
-
-// Tutup lightbox dengan klik background
-lightbox.addEventListener('click', (e) => {
-    if (e.target === lightbox) {
-        closeLightboxFunction();
-    }
-});
-
-// Keyboard navigation
-document.addEventListener('keydown', handleKeyboardNavigation);
-
-// Event listener untuk resize window agar layout tetap responsif
-window.addEventListener('resize', () => {
-    setTimeout(() => {
-        renderGallery();
-    }, 100);
-});
-
-// Inisialisasi aplikasi
-function initApp() {
-    try {
-        initScrollToTop();
-        showLoadingScreen();
-        createFilterTags();
-        applyFilters();
-    } catch (error) {
-        console.log('Error in initApp:', error);
-        // Jika ada error, langsung tampilkan konten tanpa loading
-        loadingScreen.style.display = 'none';
-        mainContent.style.opacity = '1';
-    }
+function showPreviousImage() {
+    currentLightboxIndex = (currentLightboxIndex - 1 + filteredImages.length) % filteredImages.length;
+    openLightbox(currentLightboxIndex);
 }
 
-// Jalankan aplikasi saat DOM selesai dimuat
-document.addEventListener('DOMContentLoaded', initApp);
+function showNextImage() {
+    currentLightboxIndex = (currentLightboxIndex + 1) % filteredImages.length;
+    openLightbox(currentLightboxIndex);
+}
+
+// Event Listeners
+document.addEventListener('DOMContentLoaded', function() {
+    showLoadingScreen();
+    initScrollToTop();
+    initScrollAnimations();
+    createFilterTags();
+    applyFilters();
+    
+    // Search dengan debounce
+    let searchTimeout;
+    searchInput.addEventListener('input', () => {
+        clearTimeout(searchTimeout);
+        searchTimeout = setTimeout(() => {
+            applyFilters();
+        }, 300);
+    });
+    
+    sortSelect.addEventListener('change', applyFilters);
+    
+    // Keyboard navigation untuk lightbox
+    document.addEventListener('keydown', (e) => {
+        if (!lightbox.classList.contains('hidden')) {
+            switch(e.key) {
+                case 'Escape':
+                    e.preventDefault();
+                    closeLightboxModal();
+                    break;
+                case 'ArrowLeft':
+                    e.preventDefault();
+                    showPreviousImage();
+                    break;
+                case 'ArrowRight':
+                    e.preventDefault();
+                    showNextImage();
+                    break;
+            }
+        }
+    });
+});

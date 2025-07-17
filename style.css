@@ -23,30 +23,52 @@
     }
 }
 
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pulse-gentle {
+    0%, 100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.8;
+        transform: scale(1.05);
+    }
+}
+
 /* Smooth scrolling */
 html {
     scroll-behavior: smooth;
 }
 
-/* Custom scrollbar */
+/* Custom scrollbar dengan desain yang lebih elegant */
 ::-webkit-scrollbar {
     width: 8px;
 }
 
 ::-webkit-scrollbar-track {
-    background: #f1f5f9;
+    background: linear-gradient(to bottom, #f1f5f9, #e2e8f0);
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #94a3b8;
+    background: linear-gradient(to bottom, #94a3b8, #64748b);
     border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: #64748b;
+    background: linear-gradient(to bottom, #64748b, #475569);
 }
 
-/* Line clamp utility */
+/* Line clamp utility untuk text truncation */
 .line-clamp-2 {
     display: -webkit-box;
     -webkit-line-clamp: 2;
@@ -54,78 +76,354 @@ html {
     overflow: hidden;
 }
 
-/* Modern gray backgrounds */
-.modern-bg {
-    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-}
-
+/* Enhanced hover effects */
 .card-hover {
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .card-hover:hover {
     transform: translateY(-8px) scale(1.02);
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
 }
 
-/* Hover effects */
-.hover-lift {
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.hover-lift:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-}
-
-/* Loading animation */
+/* Loading animation improvements */
 .pulse-slow {
     animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
-/* Lightbox overlay animation */
-#lightbox {
-    opacity: 0;
-    transition: opacity 0.3s ease;
+.pulse-gentle {
+    animation: pulse-gentle 2s infinite;
 }
 
-#lightbox.show {
+/* Lightbox tema terang - clean dan stabil */
+#lightbox {
+    transition: opacity 0.3s ease;
+    backdrop-filter: blur(8px);
+}
+
+#lightbox.opacity-0 {
+    opacity: 0;
+}
+
+#lightbox.opacity-100 {
     opacity: 1;
 }
 
-/* Image loading placeholder */
+/* Image loading placeholder dengan pattern yang lebih menarik */
 img {
     background-color: #f3f4f6;
-    background-image: linear-gradient(45deg, #f9fafb 25%, transparent 25%), 
-                      linear-gradient(-45deg, #f9fafb 25%, transparent 25%), 
-                      linear-gradient(45deg, transparent 75%, #f9fafb 75%), 
-                      linear-gradient(-45deg, transparent 75%, #f9fafb 75%);
+    background-image: 
+        linear-gradient(45deg, #f9fafb 25%, transparent 25%), 
+        linear-gradient(-45deg, #f9fafb 25%, transparent 25%), 
+        linear-gradient(45deg, transparent 75%, #f9fafb 75%), 
+        linear-gradient(-45deg, transparent 75%, #f9fafb 75%);
     background-size: 20px 20px;
     background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
 }
 
-/* Custom focus styles */
+/* Enhanced focus styles untuk accessibility */
 input:focus, select:focus, button:focus {
     outline: none;
-    box-shadow: 0 0 0 2px rgba(107, 114, 128, 0.5);
+    box-shadow: 0 0 0 3px rgba(107, 114, 128, 0.3);
 }
 
-/* Responsive text */
-@media (max-width: 640px) {
-    .text-responsive {
-        font-size: 0.875rem;
+/* Gallery grid dengan masonry layout yang diperbaiki */
+#galleryGrid {
+    column-count: 1;
+    column-gap: 1.5rem;
+    column-fill: balance;
+}
+
+@media (min-width: 640px) {
+    #galleryGrid {
+        column-count: 2;
     }
+}
+
+@media (min-width: 768px) {
+    #galleryGrid {
+        column-count: 3;
+    }
+}
+
+@media (min-width: 1280px) {
+    #galleryGrid {
+        column-count: 4;
+        column-gap: 2rem;
+    }
+}
+
+/* Gallery item styling */
+.gallery-item {
+    break-inside: avoid;
+    page-break-inside: avoid;
+    display: inline-block;
+    width: 100%;
+    margin-bottom: 1.5rem;
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+    .gallery-item {
+        margin-bottom: 1rem;
+    }
+    
+    #galleryGrid {
+        column-gap: 1rem;
+    }
+    
+    .max-w-7xl {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+    
+    .text-5xl {
+        font-size: 2.5rem;
+    }
+    
+    .text-xl {
+        font-size: 1.125rem;
+    }
+}
+
+/* Tablet specific adjustments */
+@media (min-width: 768px) and (max-width: 1024px) {
+    .text-5xl {
+        font-size: 3rem;
+    }
+}
+
+/* Enhanced button animations */
+.favorite-btn {
+    transform: scale(1);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.favorite-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.favorite-btn:active {
+    transform: scale(0.95);
+}
+
+/* Smooth transitions untuk semua interactive elements */
+button, input, select, a {
+    transition: all 0.2s ease;
+}
+
+/* Enhanced focus styles untuk accessibility */
+button:focus-visible, input:focus-visible, select:focus-visible, a:focus-visible {
+    outline: 2px solid #3b82f6;
+    outline-offset: 2px;
+}
+
+/* Scroll reveal animation */
+.scroll-reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.scroll-reveal.revealed {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Professional Loading Screen Animations - Enhanced */
+.loading-bar {
+    background: linear-gradient(90deg, #3b82f6, #8b5cf6, #ec4899, #f59e0b, #10b981, #3b82f6);
+    background-size: 400% 100%;
+    border-radius: 1rem;
+    box-shadow: 0 4px 20px rgba(59, 130, 246, 0.3);
+}
+
+@keyframes loadingProgress {
+    0% { 
+        width: 0%; 
+        box-shadow: 0 4px 20px rgba(59, 130, 246, 0.3);
+    }
+    20% { 
+        width: 25%; 
+        box-shadow: 0 4px 25px rgba(139, 92, 246, 0.4);
+    }
+    40% { 
+        width: 50%; 
+        box-shadow: 0 4px 30px rgba(236, 72, 153, 0.5);
+    }
+    60% { 
+        width: 75%; 
+        box-shadow: 0 4px 35px rgba(245, 158, 11, 0.6);
+    }
+    80% { 
+        width: 90%; 
+        box-shadow: 0 4px 40px rgba(16, 185, 129, 0.7);
+    }
+    100% { 
+        width: 100%; 
+        box-shadow: 0 6px 45px rgba(59, 130, 246, 0.8);
+    }
+}
+
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    25% { background-position: 100% 50%; }
+    50% { background-position: 200% 50%; }
+    75% { background-position: 300% 50%; }
+    100% { background-position: 400% 50%; }
+}
+
+/* Enhanced Floating animation for geometric shapes */
+@keyframes animate-float {
+    0%, 100% { 
+        transform: translateY(0px) rotate(0deg) scale(1);
+        opacity: 0.15;
+        filter: blur(0px);
+    }
+    25% { 
+        transform: translateY(-30px) rotate(90deg) scale(1.1);
+        opacity: 0.4;
+        filter: blur(1px);
+    }
+    50% { 
+        transform: translateY(-15px) rotate(180deg) scale(0.9);
+        opacity: 0.25;
+        filter: blur(2px);
+    }
+    75% { 
+        transform: translateY(-45px) rotate(270deg) scale(1.2);
+        opacity: 0.35;
+        filter: blur(1px);
+    }
+}
+
+.animate-float {
+    animation: animate-float 12s ease-in-out infinite;
+}
+
+/* Enhanced Loading Screen Transitions */
+#loadingScreen {
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Professional pulsing effect for statistics cards */
+@keyframes cardPulse {
+    0%, 100% {
+        transform: scale(1);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    }
+    50% {
+        transform: scale(1.05);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+    }
+}
+
+#loadingScreen .grid > div {
+    animation: cardPulse 2s ease-in-out infinite;
+}
+
+#loadingScreen .grid > div:nth-child(2) {
+    animation-delay: 0.3s;
+}
+
+#loadingScreen .grid > div:nth-child(3) {
+    animation-delay: 0.6s;
+}
+
+/* Typing animation for loading text */
+@keyframes typing {
+    from { width: 0; }
+    to { width: 100%; }
+}
+
+@keyframes blink {
+    from, to { border-color: transparent; }
+    50% { border-color: #6b7280; }
+}
+
+.typing-animation {
+    display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
+    border-right: 2px solid #6b7280;
+    animation: typing 2s steps(20) 0.5s 1 normal both, blink 1s linear infinite;
+    max-width: fit-content;
+}
+
+/* Enhanced bouncing dots */
+@keyframes enhancedBounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0) scale(1);
+        opacity: 0.7;
+    }
+    40% {
+        transform: translateY(-10px) scale(1.2);
+        opacity: 1;
+    }
+    60% {
+        transform: translateY(-5px) scale(1.1);
+        opacity: 0.9;
+    }
+}
+
+#loadingScreen .animate-bounce {
+    animation: enhancedBounce 1.2s ease-in-out infinite;
+}
+
+/* Gradient text animation */
+@keyframes animate-gradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.animate-gradient {
+    background-size: 300% 300%;
+    animation: animate-gradient 4s ease-in-out infinite;
+}
+
+/* Enhanced lightbox controls - tema terang - NO BOUNCE */
+#lightbox button {
+    backdrop-filter: blur(4px);
+    transition: background-color 0.15s ease, border-color 0.15s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+#lightbox button:hover {
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+#lightbox button:active {
+    transform: none;
+}
+
+/* Loading screen improvements */
+#loadingScreen {
+    background: linear-gradient(135deg, #1f2937 0%, #111827 50%, #1f2937 100%);
+    background-size: 400% 400%;
+    animation: gradient 4s ease infinite;
+}
+
+@keyframes gradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
 }
 
 /* Print styles */
 @media print {
     #loadingScreen,
-    #lightbox {
+    #lightbox,
+    .favorite-btn,
+    #scrollToTop {
         display: none !important;
     }
     
-    .no-print {
-        display: none !important;
+    .gallery-item {
+        break-inside: avoid;
+        margin-bottom: 1rem;
     }
 }
 
@@ -154,227 +452,113 @@ input:focus, select:focus, button:focus {
     .border-gray-200 {
         border-color: black;
     }
-}
-
-/* Auto-height grid untuk layout responsif */
-#galleryGrid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    grid-auto-rows: auto;
-    gap: 1.5rem;
-}
-
-/* Responsive breakpoints untuk grid */
-@media (max-width: 640px) {
-    #galleryGrid {
-        grid-template-columns: 1fr;
-        gap: 1rem;
-    }
-}
-
-@media (min-width: 641px) and (max-width: 768px) {
-    #galleryGrid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 1.25rem;
-    }
-}
-
-@media (min-width: 769px) and (max-width: 1024px) {
-    #galleryGrid {
-        grid-template-columns: repeat(3, 1fr);
-    }
-}
-
-@media (min-width: 1280px) {
-    #galleryGrid {
-        grid-template-columns: repeat(4, 1fr);
-    }
-}
-
-/* Masonry-style fallback untuk browser yang mendukung */
-@supports (display: contents) {
-    #galleryGrid {
-        column-count: 1;
-        column-gap: 1.5rem;
-    }
     
-    @media (min-width: 640px) {
-        #galleryGrid {
-            column-count: 2;
-        }
-    }
-    
-    @media (min-width: 768px) {
-        #galleryGrid {
-            column-count: 3;
-        }
-    }
-    
-    @media (min-width: 1280px) {
-        #galleryGrid {
-            column-count: 4;
-        }
-    }
-    
-    .gallery-item {
-        break-inside: avoid;
-        margin-bottom: 1.5rem;
-        display: inline-block;
-        width: 100%;
+    .shadow-lg {
+        box-shadow: 0 4px 6px black;
     }
 }
 
-/* Pastikan gambar tidak pernah terpotong */
-#galleryGrid img {
+/* Enhanced empty state styling */
+#emptyState {
+    animation: fadeIn 0.6s ease;
+}
+
+/* Footer link hover effects */
+footer a {
+    position: relative;
+    overflow: hidden;
+}
+
+footer a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #6b7280, #9ca3af);
+    transition: width 0.3s ease;
+}
+
+footer a:hover::after {
     width: 100%;
-    height: auto;
-    object-fit: contain;
-    max-width: 100%;
 }
 
-/* Responsive padding dan margin */
-@media (max-width: 640px) {
-    .max-w-7xl {
-        padding-left: 1rem;
-        padding-right: 1rem;
-    }
-    
-    main {
-        padding-top: 1.5rem;
-        padding-bottom: 1.5rem;
-    }
-    
-    .text-3xl {
-        font-size: 1.875rem;
-    }
+/* Enhanced card shadow variations */
+.gallery-item:nth-child(odd) .group {
+    --tw-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
 }
 
-/* Tablet specific adjustments */
-@media (min-width: 768px) and (max-width: 1024px) {
-    .text-3xl {
-        font-size: 2rem;
-    }
-    
-    main {
-        padding-top: 2rem;
-        padding-bottom: 2rem;
-    }
+.gallery-item:nth-child(even) .group {
+    --tw-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
 }
 
-/* Dark mode specific styles */
-.dark body {
-    background-color: #1f2937;
-    color: #f9fafb;
+/* Staggered animation untuk gallery items */
+.gallery-item:nth-child(1) { animation-delay: 0ms; }
+.gallery-item:nth-child(2) { animation-delay: 100ms; }
+.gallery-item:nth-child(3) { animation-delay: 200ms; }
+.gallery-item:nth-child(4) { animation-delay: 300ms; }
+.gallery-item:nth-child(5) { animation-delay: 400ms; }
+.gallery-item:nth-child(6) { animation-delay: 500ms; }
+
+/* Performance optimizations */
+.gallery-item img {
+    will-change: transform;
+    backface-visibility: hidden;
 }
 
-.dark header {
-    background-color: #111827;
-    border-color: #374151;
+/* Enhanced search input styling */
+#searchInput {
+    background-image: linear-gradient(to right, #ffffff, #f9fafb);
 }
 
-.dark .bg-white {
-    background-color: #1f2937;
+#searchInput:focus {
+    background-image: linear-gradient(to right, #ffffff, #ffffff);
 }
 
-.dark .border-gray-200 {
-    border-color: #374151;
+/* Filter tags enhanced styling */
+#filterTags button {
+    backdrop-filter: blur(4px);
+    border-radius: 1.5rem;
 }
 
-.dark input {
-    background-color: #374151;
-    border-color: #4b5563;
-    color: #f9fafb;
-}
-
-.dark input::placeholder {
-    color: #9ca3af;
-}
-
-.dark select {
-    background-color: #374151;
-    border-color: #4b5563;
-    color: #f9fafb;
-}
-
-/* Enhanced scroll animations */
-.scroll-reveal {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
-}
-
-.scroll-reveal.revealed {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-/* Improved hover effects */
-.card-hover {
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.card-hover:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-}
-
-.dark .card-hover:hover {
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
-}
-
-/* Masonry layout improvements */
-.masonry-grid {
-    column-fill: balance;
-}
-
-.masonry-item {
-    break-inside: avoid;
-    page-break-inside: avoid;
-    display: inline-block;
-    width: 100%;
-    margin-bottom: 1rem;
-}
-
-/* Enhanced lightbox styles */
-#lightbox {
+#filterTags button:hover {
     backdrop-filter: blur(8px);
 }
 
-/* Favorite button animations */
-.favorite-btn {
-    transform: scale(1);
-    transition: transform 0.2s ease;
+/* Lightbox image container tema terang - responsif */
+#lightboxImage {
+    max-width: 70vw;
+    max-height: 70vh;
+    object-fit: contain;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
 }
 
-.favorite-btn:hover {
-    transform: scale(1.1);
-}
-
-.favorite-btn:active {
-    transform: scale(0.95);
-}
-
-/* Smooth transitions for all interactive elements */
-button, input, select {
-    transition: all 0.2s ease;
-}
-
-/* Enhanced focus styles for accessibility */
-button:focus-visible, input:focus-visible, select:focus-visible {
-    outline: 2px solid #3b82f6;
-    outline-offset: 2px;
-}
-
-/* Loading animation improvements */
-@keyframes pulse-gentle {
-    0%, 100% {
-        opacity: 1;
+@media (max-width: 768px) {
+    #lightboxImage {
+        max-width: 85vw;
+        max-height: 60vh;
     }
-    50% {
-        opacity: 0.7;
+    
+    #lightbox button {
+        width: 10px !important;
+        height: 40px !important;
+    }
+    
+    #lightboxCaption {
+        max-width: 85vw !important;
+        padding: 1rem !important;
     }
 }
 
-.pulse-gentle {
-    animation: pulse-gentle 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+/* Enhanced statistics display */
+#totalImages, #totalLikes, #activeCategory {
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Subtle gradient overlays */
+.gradient-overlay {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
 }

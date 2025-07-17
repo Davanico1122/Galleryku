@@ -29,22 +29,102 @@
                         'fade-in': 'fadeIn 0.5s ease-in-out',
                         'scale-in': 'scaleIn 0.6s ease-out',
                         'pulse-slow': 'pulse 2s infinite',
-                        'pulse-gentle': 'pulse-gentle 2s infinite',
+                        'slide-up': 'slideUp 0.6s ease-out',
                     }
                 }
             }
         }
     </script>
 </head>
-<body class="font-inter bg-gray-50 text-gray-800">
+<body class="font-inter bg-gradient-to-br from-gray-50 to-gray-100 text-gray-800 min-h-screen">
     
-    <!-- Loading Screen -->
-    <div id="loadingScreen" class="fixed inset-0 bg-gray-900 flex items-center justify-center z-50 transition-opacity duration-500">
-        <div class="text-center">
-            <div class="text-white text-2xl font-light mb-4 animate-pulse-slow">
-                Welcome to My Gallery – Loading...
+    <!-- Loading Screen - Professional Light Theme -->
+    <div id="loadingScreen" class="fixed inset-0 bg-gradient-to-br from-gray-50 via-white to-gray-100 z-50 flex flex-col items-center justify-center transition-opacity duration-500">
+        
+        <!-- Compact Logo with Initial "D" -->
+        <div class="relative mb-8">
+            <div class="w-16 h-16 rounded-full bg-gradient-to-br from-white via-gray-50 to-white flex items-center justify-center shadow-lg border border-gray-300 relative overflow-hidden">
+                <!-- Subtle animated background -->
+                <div class="absolute inset-0 bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 opacity-30 animate-pulse"></div>
+                
+                <!-- Initial "D" -->
+                <span class="text-2xl font-black text-gray-800 z-10 relative">D</span>
             </div>
-            <div class="w-16 h-16 border-2 border-white border-t-transparent rounded-full animate-spin mx-auto"></div>
+            
+            <!-- Compact floating rings -->
+            <div class="absolute inset-0 rounded-full">
+                <div class="absolute inset-0 rounded-full border border-gray-300 opacity-20 animate-ping" style="animation-duration: 2s;"></div>
+                <div class="absolute inset-0 rounded-full border border-blue-200 opacity-30 animate-pulse" style="animation-delay: 0.5s; animation-duration: 3s;"></div>
+            </div>
+        </div>
+        
+        <!-- Compact Welcome Text -->
+        <div class="text-center mb-8 px-4">
+            <div class="relative">
+                <h1 class="text-3xl md:text-4xl font-bold mb-4 tracking-tight leading-tight">
+                    <span class="bg-gradient-to-r from-gray-900 via-gray-700 to-gray-800 bg-clip-text text-transparent">
+                        Galeri Pribadi Dava
+                    </span>
+                </h1>
+                <!-- Simple underline -->
+                <div class="w-20 h-0.5 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-full mx-auto"></div>
+            </div>
+            <p class="text-base md:text-lg text-gray-600 font-light max-w-2xl mx-auto leading-relaxed mt-3">
+                Koleksi fotografi personal dengan desain minimalis dan elegan
+            </p>
+        </div>
+        
+        <!-- Compact Loading Animation -->
+        <div class="relative mb-6">
+            <!-- Progress Bar -->
+            <div class="w-64 h-1.5 bg-gray-200 rounded-full overflow-hidden shadow-inner mx-auto">
+                <div class="h-full bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-full loading-bar shadow-sm"></div>
+            </div>
+            
+            <!-- Loading Text -->
+            <div class="text-center mt-4">
+                <p class="text-gray-500 text-sm font-medium mb-2">
+                    <span class="typing-animation">Memuat galeri foto...</span>
+                </p>
+                <div class="flex justify-center items-center space-x-1.5 mt-2">
+                    <div class="w-1.5 h-1.5 bg-blue-500 rounded-full animate-bounce"></div>
+                    <div class="w-1.5 h-1.5 bg-purple-500 rounded-full animate-bounce" style="animation-delay: 0.1s;"></div>
+                    <div class="w-1.5 h-1.5 bg-pink-500 rounded-full animate-bounce" style="animation-delay: 0.2s;"></div>
+                    <div class="w-1.5 h-1.5 bg-yellow-500 rounded-full animate-bounce" style="animation-delay: 0.3s;"></div>
+                    <div class="w-1.5 h-1.5 bg-green-500 rounded-full animate-bounce" style="animation-delay: 0.4s;"></div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Compact Statistics Cards -->
+        <div class="grid grid-cols-3 gap-3 mb-8 max-w-sm mx-auto">
+            <div class="bg-white/80 backdrop-blur-sm rounded-xl p-3 shadow-md border border-gray-200 text-center">
+                <div class="text-xl font-bold text-gray-800 mb-1">10</div>
+                <div class="text-xs text-gray-600 uppercase tracking-wide font-medium">Foto</div>
+            </div>
+            <div class="bg-white/80 backdrop-blur-sm rounded-xl p-3 shadow-md border border-gray-200 text-center">
+                <div class="text-xl font-bold text-gray-800 mb-1" id="totalCategories">0</div>
+                <div class="text-xs text-gray-600 uppercase tracking-wide font-medium">Kategori</div>
+            </div>
+            <div class="bg-white/80 backdrop-blur-sm rounded-xl p-3 shadow-md border border-gray-200 text-center">
+                <div class="text-xl font-bold text-gray-800 mb-1">2025</div>
+                <div class="text-xs text-gray-600 uppercase tracking-wide font-medium">Tahun</div>
+            </div>
+        </div>
+        
+        <!-- Subtle Floating Shapes -->
+        <div class="absolute inset-0 overflow-hidden pointer-events-none">
+            <div class="absolute top-20 left-10 w-16 h-16 bg-gradient-to-br from-blue-100 to-blue-200 rounded-full opacity-15 animate-float" style="animation-delay: 0s;"></div>
+            <div class="absolute top-32 right-10 w-12 h-12 bg-gradient-to-br from-purple-100 to-purple-200 rounded-lg opacity-15 animate-float" style="animation-delay: 1s;"></div>
+            <div class="absolute bottom-20 left-10 w-10 h-10 bg-gradient-to-br from-pink-100 to-pink-200 rounded-full opacity-15 animate-float" style="animation-delay: 2s;"></div>
+            <div class="absolute bottom-32 right-10 w-14 h-14 bg-gradient-to-br from-green-100 to-green-200 rounded-xl opacity-15 animate-float" style="animation-delay: 0.5s;"></div>
+        </div>
+        
+        <!-- Subtle Bottom Text -->
+        <div class="absolute bottom-8 left-0 right-0 text-center">
+            <p class="text-gray-400 text-sm font-light">
+                Professional Photography Gallery • Designed with ❤️
+            </p>
         </div>
     </div>
 
@@ -52,30 +132,39 @@
     <div id="mainContent" class="opacity-0 transition-opacity duration-500">
         
         <!-- Header -->
-        <header class="bg-gradient-to-br from-white to-gray-50 shadow-lg border-b border-gray-200">
-            <div class="max-w-7xl mx-auto px-4 py-8">
-                <h1 class="text-4xl font-bold text-gray-900 text-center tracking-tight">Galeri Pribadi Dava</h1>
-                <p class="text-gray-600 text-center mt-3 text-lg font-medium">Koleksi Foto Perjalanan dan Momen Berharga</p>
-                <div class="flex justify-center mt-4">
-                    <div class="w-24 h-1 bg-gray-600 rounded-full"></div>
+        <header class="bg-gradient-to-r from-white via-gray-50 to-white shadow-xl border-b border-gray-200">
+            <div class="max-w-7xl mx-auto px-4 py-10">
+                <div class="text-center">
+                    <h1 class="text-5xl font-bold text-gray-900 tracking-tight mb-4">Galeri Pribadi Dava</h1>
+                    <p class="text-gray-600 text-xl font-medium mb-6">Koleksi Foto Perjalanan dan Momen Berharga</p>
+                    <div class="flex justify-center items-center gap-4 mb-4">
+                        <div class="w-24 h-1 bg-gradient-to-r from-transparent via-gray-400 to-transparent rounded-full"></div>
+                        <div class="w-3 h-3 bg-gray-400 rounded-full"></div>
+                        <div class="w-24 h-1 bg-gradient-to-r from-transparent via-gray-400 to-transparent rounded-full"></div>
+                    </div>
+                    <!-- Statistics -->
+                    <div class="flex justify-center gap-6 text-sm text-gray-600 font-medium">
+                        <span id="totalImages" class="bg-white px-4 py-2 rounded-full shadow-md border border-gray-200">Total: 0 foto</span>
+                        <span id="headerCategories" class="bg-white px-4 py-2 rounded-full shadow-md border border-gray-200">0 kategori</span>
+                    </div>
                 </div>
             </div>
         </header>
 
         <!-- Filter & Search Section -->
-        <section class="bg-gradient-to-r from-gray-50 to-white border-b border-gray-200 shadow-sm">
+        <section class="bg-gradient-to-b from-white to-gray-50 border-b border-gray-200 shadow-sm">
             <div class="max-w-7xl mx-auto px-4 py-8">
                 
                 <!-- Search Input -->
                 <div class="mb-8">
-                    <div class="relative max-w-xl mx-auto">
+                    <div class="relative max-w-2xl mx-auto">
                         <input 
                             type="text" 
                             id="searchInput" 
                             placeholder="Cari berdasarkan caption, tag, atau tanggal..."
-                            class="w-full px-6 py-4 border border-gray-300 rounded-2xl focus:ring-4 focus:ring-gray-200 focus:border-gray-600 transition-all bg-white text-gray-900 placeholder-gray-500 shadow-lg text-base"
+                            class="w-full px-6 py-4 pl-12 border-2 border-gray-300 rounded-2xl focus:ring-4 focus:ring-gray-200 focus:border-gray-500 transition-all bg-white text-gray-900 placeholder-gray-500 shadow-lg text-base hover:shadow-xl"
                         >
-                        <svg class="absolute right-4 top-1/2 transform -translate-y-1/2 w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                         </svg>
                     </div>
@@ -88,110 +177,162 @@
                     </div>
                 </div>
 
-                <!-- Statistics Info -->
-                <div class="mb-6">
-                    <div class="flex flex-wrap justify-center gap-6 text-sm text-gray-600 font-medium">
-                        <span id="totalImages" class="bg-white px-4 py-2 rounded-full shadow-md">Total Gambar: 0</span>
-                        <span id="activeCategory" class="bg-white px-4 py-2 rounded-full shadow-md">Kategori Aktif: Semua</span>
-                        <span id="currentFilter" class="hidden bg-gray-100 px-4 py-2 rounded-full shadow-md text-gray-700">Filter: </span>
+                <!-- Current Filter Info -->
+                <div class="mb-6 text-center">
+                    <div class="inline-flex items-center gap-4 text-sm text-gray-600 font-medium">
+                        <span id="activeCategory" class="bg-white px-6 py-3 rounded-full shadow-md border border-gray-200">Kategori: Semua</span>
+                        <span id="currentFilter" class="hidden bg-gray-100 px-6 py-3 rounded-full shadow-md text-gray-700 border border-gray-300">Filter aktif</span>
                     </div>
                 </div>
 
-                <!-- Sort Dropdown -->
-                <div class="flex justify-between items-center">
+                <!-- Sort and Results -->
+                <div class="flex flex-col sm:flex-row justify-between items-center gap-4">
                     <div class="flex items-center gap-4">
                         <label for="sortSelect" class="text-sm font-semibold text-gray-700">Urutkan:</label>
                         <select 
                             id="sortSelect" 
-                            class="px-4 py-3 border border-gray-300 rounded-xl bg-white text-gray-900 text-sm focus:ring-2 focus:ring-gray-500 focus:border-gray-600 shadow-md font-medium"
+                            class="px-4 py-3 border-2 border-gray-300 rounded-xl bg-white text-gray-900 text-sm focus:ring-2 focus:ring-gray-500 focus:border-gray-600 shadow-md font-medium hover:shadow-lg transition-all"
                         >
                             <option value="newest">Terbaru Dulu</option>
                             <option value="oldest">Terlama Dulu</option>
+                            <option value="most-liked">Paling Disukai</option>
                         </select>
+                        <button onclick="clearAllFilters()" class="px-4 py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-xl transition-all shadow-md hover:shadow-lg text-sm font-medium border border-gray-300">
+                            Reset Filter
+                        </button>
                     </div>
-                    <div class="text-sm text-gray-600 font-semibold bg-white px-4 py-2 rounded-full shadow-md">
+                    <div class="text-sm text-gray-600 font-semibold bg-white px-6 py-3 rounded-full shadow-md border border-gray-200">
                         <span id="imageCount">0</span> foto ditampilkan
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Gallery Grid -->
-        <main class="max-w-7xl mx-auto px-4 py-8">
-            <div id="galleryGrid" class="columns-1 sm:columns-2 md:columns-3 xl:columns-4 gap-4 space-y-4">
+        <!-- Gallery Grid - Optimized for Maximum Space Usage -->
+        <main class="max-w-7xl mx-auto px-4 py-12">
+            <div id="galleryGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-4">
                 <!-- Gambar akan diisi oleh JavaScript -->
             </div>
             
             <!-- Empty State -->
             <div id="emptyState" class="hidden text-center py-20">
-                <div class="text-gray-400 text-6xl mb-6">🔍</div>
-                <h3 class="text-gray-700 text-2xl font-bold mb-4">Tidak ada foto ditemukan</h3>
-                <p class="text-gray-500 mb-8 text-lg" id="emptyStateMessage">Coba ubah filter atau kata kunci pencarian</p>
-                <button onclick="clearAllFilters()" class="px-8 py-4 bg-gray-700 text-white rounded-2xl hover:bg-gray-800 transition-all shadow-lg transform hover:-translate-y-1 font-semibold">
+                <div class="text-gray-300 text-8xl mb-8">🔍</div>
+                <h3 class="text-gray-700 text-3xl font-bold mb-6">Tidak ada foto ditemukan</h3>
+                <p class="text-gray-500 mb-10 text-lg max-w-md mx-auto" id="emptyStateMessage">Coba ubah filter atau kata kunci pencarian</p>
+                <button onclick="clearAllFilters()" class="px-10 py-4 bg-gray-700 text-white rounded-2xl hover:bg-gray-800 transition-all shadow-lg transform hover:-translate-y-1 font-semibold text-lg">
                     Reset Semua Filter
                 </button>
             </div>
         </main>
 
         <!-- Scroll to Top Button -->
-        <button id="scrollToTop" class="fixed bottom-6 right-6 p-3 bg-gray-800 dark:bg-gray-600 text-white rounded-full shadow-lg hover:bg-gray-700 dark:hover:bg-gray-500 transition-all transform translate-y-16 opacity-0">
-            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+        <button id="scrollToTop" class="fixed bottom-8 right-8 p-4 bg-gray-800 text-white rounded-full shadow-xl hover:bg-gray-700 transition-all transform translate-y-16 opacity-0 hover:scale-110 z-40">
+            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
                 <path fill-rule="evenodd" d="M3.293 9.707a1 1 0 010-1.414l6-6a1 1 0 011.414 0l6 6a1 1 0 01-1.414 1.414L10 4.414 4.707 9.707a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
             </svg>
         </button>
 
         <!-- Footer -->
-        <footer class="bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 text-center text-gray-500 dark:text-gray-400 text-sm py-6 mt-12">
-            <p class="mb-3">&copy; 2025 Galeri Milik Dava</p>
-            <div class="flex justify-center gap-6 text-gray-400 dark:text-gray-500">
-                <a href="https://github.com/namakamu" target="_blank" class="hover:text-gray-600 dark:hover:text-gray-300 transition-colors" title="GitHub Profile">GitHub</a>
-                <a href="https://instagram.com/namakamu" target="_blank" class="hover:text-gray-600 dark:hover:text-gray-300 transition-colors" title="Instagram Profile">Instagram</a>
-                <a href="https://x.com/namakamu" target="_blank" class="hover:text-gray-600 dark:hover:text-gray-300 transition-colors" title="X Profile">X</a>
-                <a href="mailto:email@kamu.com" class="hover:text-gray-600 dark:hover:text-gray-300 transition-colors" title="Send Email">Email</a>
+        <footer class="bg-gradient-to-r from-gray-100 via-white to-gray-100 border-t border-gray-200 mt-16">
+            <div class="max-w-7xl mx-auto px-4 py-12">
+                <div class="text-center">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-4">Terhubung dengan saya</h3>
+                    <div class="flex justify-center gap-8 mb-8">
+                        <a href="https://github.com/namakamu" target="_blank" class="group flex items-center gap-3 px-6 py-3 bg-white hover:bg-gray-50 rounded-xl shadow-md hover:shadow-lg transition-all border border-gray-200">
+                            <svg class="w-5 h-5 text-gray-600 group-hover:text-gray-800" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                            </svg>
+                            <span class="font-medium text-gray-700 group-hover:text-gray-900">GitHub</span>
+                        </a>
+                        <a href="https://instagram.com/namakamu" target="_blank" class="group flex items-center gap-3 px-6 py-3 bg-white hover:bg-gray-50 rounded-xl shadow-md hover:shadow-lg transition-all border border-gray-200">
+                            <svg class="w-5 h-5 text-gray-600 group-hover:text-gray-800" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                            </svg>
+                            <span class="font-medium text-gray-700 group-hover:text-gray-900">Instagram</span>
+                        </a>
+                        <a href="https://x.com/namakamu" target="_blank" class="group flex items-center gap-3 px-6 py-3 bg-white hover:bg-gray-50 rounded-xl shadow-md hover:shadow-lg transition-all border border-gray-200">
+                            <svg class="w-5 h-5 text-gray-600 group-hover:text-gray-800" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                            </svg>
+                            <span class="font-medium text-gray-700 group-hover:text-gray-900">X (Twitter)</span>
+                        </a>
+                    </div>
+                    <div class="text-gray-500 text-sm">
+                        <p>&copy; 2025 Galeri Pribadi Dava. Dibuat dengan ❤️</p>
+                    </div>
+                </div>
             </div>
         </footer>
     </div>
 
-    <!-- Lightbox -->
-    <div id="lightbox" class="fixed inset-0 bg-black bg-opacity-90 z-50 hidden flex items-center justify-center p-4">
-        <div class="relative max-w-full max-h-full">
-            <img 
-                id="lightboxImage" 
-                src="" 
-                alt="" 
-                class="max-w-[90vw] max-h-[90vh] object-contain rounded-lg"
-            >
+    <!-- Lightbox - Tema Terang Clean -->
+    <div id="lightbox" class="fixed inset-0 bg-white bg-opacity-95 z-50 hidden transition-all duration-300 opacity-0">
+        <!-- Overlay Background -->
+        <div class="absolute inset-0 bg-gray-100 bg-opacity-90 backdrop-blur-sm" onclick="closeLightboxModal()"></div>
+        
+        <!-- Main Lightbox Container -->
+        <div class="relative w-full h-full flex items-center justify-center p-4">
             
-            <!-- Navigation Controls -->
-            <button 
-                id="prevImage" 
-                class="absolute left-4 top-1/2 transform -translate-y-1/2 text-white text-2xl font-bold w-12 h-12 bg-black bg-opacity-50 rounded-full hover:bg-opacity-70 transition-all flex items-center justify-center"
-            >
-                &#8249;
-            </button>
-            <button 
-                id="nextImage" 
-                class="absolute right-4 top-1/2 transform -translate-y-1/2 text-white text-2xl font-bold w-12 h-12 bg-black bg-opacity-50 rounded-full hover:bg-opacity-70 transition-all flex items-center justify-center"
-            >
-                &#8250;
-            </button>
-            
-            <!-- Close Button -->
+            <!-- Close Button - Fixed Top Right -->
             <button 
                 id="closeLightbox" 
-                class="absolute top-4 right-4 text-white text-2xl font-bold w-10 h-10 bg-black bg-opacity-50 rounded-full hover:bg-opacity-70 transition-all"
+                class="fixed top-6 right-6 z-60 w-12 h-12 bg-white hover:bg-gray-50 border-2 border-gray-300 hover:border-gray-400 rounded-full shadow-lg transition-all duration-200 flex items-center justify-center group"
+                title="Tutup (Esc)"
+                onclick="closeLightboxModal()"
             >
-                ×
+                <svg class="w-6 h-6 text-gray-600 group-hover:text-gray-800 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
             </button>
             
-            <!-- Image Info -->
-            <div id="lightboxCaption" class="absolute bottom-4 left-4 right-4 text-white text-center bg-black bg-opacity-50 p-4 rounded-lg">
-                <!-- Caption akan diisi oleh JavaScript -->
+            <!-- Image Counter - Fixed Top Left -->
+            <div class="fixed top-6 left-6 z-60 bg-white border-2 border-gray-300 px-4 py-2 rounded-full shadow-lg">
+                <span id="imageCounter" class="text-sm font-medium text-gray-700">1 / 10</span>
             </div>
             
-            <!-- Image Counter -->
-            <div class="absolute top-4 left-4 text-white text-sm bg-black bg-opacity-50 px-3 py-1 rounded-full">
-                <span id="imageCounter">1 / 6</span>
+            <!-- Previous Navigation Button - No Bounce -->
+            <button 
+                id="prevImage" 
+                class="fixed left-6 top-1/2 transform -translate-y-1/2 z-60 w-10 h-10 bg-white hover:bg-gray-50 border-2 border-gray-300 hover:border-gray-400 rounded-full shadow-md transition-colors duration-150 flex items-center justify-center"
+                title="Gambar Sebelumnya (←)"
+                onclick="showPreviousImage()"
+            >
+                <svg class="w-4 h-4 text-gray-600 hover:text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                </svg>
+            </button>
+            
+            <!-- Next Navigation Button - No Bounce -->
+            <button 
+                id="nextImage" 
+                class="fixed right-6 top-1/2 transform -translate-y-1/2 z-60 w-10 h-10 bg-white hover:bg-gray-50 border-2 border-gray-300 hover:border-gray-400 rounded-full shadow-md transition-colors duration-150 flex items-center justify-center"
+                title="Gambar Selanjutnya (→)"
+                onclick="showNextImage()"
+            >
+                <svg class="w-4 h-4 text-gray-600 hover:text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
+            </button>
+            
+            <!-- Main Image Content Area -->
+            <div class="flex flex-col items-center justify-center max-w-full max-h-full">
+                
+                <!-- Image Container -->
+                <div class="bg-white rounded-xl shadow-2xl border border-gray-200 overflow-hidden mb-6">
+                    <img 
+                        id="lightboxImage" 
+                        src="" 
+                        alt="" 
+                        class="max-w-[70vw] max-h-[70vh] object-contain"
+                        style="max-width: 70vw; max-height: 70vh;"
+                    >
+                </div>
+                
+                <!-- Image Information Panel -->
+                <div id="lightboxCaption" class="bg-white border-2 border-gray-300 rounded-xl shadow-lg p-6 max-w-[70vw] text-center">
+                    <!-- Caption content akan diisi oleh JavaScript -->
+                </div>
+                
             </div>
         </div>
     </div>
