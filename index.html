@@ -216,7 +216,7 @@
             
             <!-- Empty State -->
             <div id="emptyState" class="hidden text-center py-20">
-                <div class="text-gray-300 text-8xl mb-8">🔍</div>
+                <div class="text-gray-300 text-8xl mb-8"></div>
                 <h3 class="text-gray-700 text-3xl font-bold mb-6">Tidak ada foto ditemukan</h3>
                 <p class="text-gray-500 mb-10 text-lg max-w-md mx-auto" id="emptyStateMessage">Coba ubah filter atau kata kunci pencarian</p>
                 <button onclick="clearAllFilters()" class="px-10 py-4 bg-gray-700 text-white rounded-2xl hover:bg-gray-800 transition-all shadow-lg transform hover:-translate-y-1 font-semibold text-lg">
@@ -265,77 +265,76 @@
         </footer>
     </div>
 
-    <!-- Lightbox - Tema Terang Clean -->
-    <div id="lightbox" class="fixed inset-0 bg-white bg-opacity-95 z-50 hidden transition-all duration-300 opacity-0">
-        <!-- Overlay Background -->
-        <div class="absolute inset-0 bg-gray-100 bg-opacity-90 backdrop-blur-sm" onclick="closeLightboxModal()"></div>
+    <!-- Lightbox - Versi Final -->
+<div id="lightbox" class="fixed inset-0 bg-white bg-opacity-95 z-50 hidden opacity-0 transition-opacity duration-300">
+    <!-- Overlay -->
+    <div class="absolute inset-0 bg-gray-100/90 backdrop-blur-sm" onclick="closeLightboxModal()"></div>
+
+    <!-- Kontainer Utama -->
+    <div class="relative w-full h-full flex items-center justify-center p-6">
         
-        <!-- Main Lightbox Container -->
-        <div class="relative w-full h-full flex items-center justify-center p-4">
+        <!-- Tombol Tutup -->
+        <button 
+            id="closeLightbox" 
+            class="fixed top-6 right-6 z-60 w-12 h-12 bg-white hover:bg-gray-50 border border-gray-300 hover:border-gray-400 rounded-full shadow-lg transition duration-200 flex items-center justify-center group"
+            title="Tutup (Esc)"
+            onclick="closeLightboxModal()"
+        >
+            <svg class="w-6 h-6 text-gray-600 group-hover:text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+        </button>
+
+        <!-- Tombol Prev -->
+        <button 
+            id="prevImage" 
+            class="fixed left-6 top-1/2 -translate-y-1/2 z-60 w-10 h-10 bg-white hover:bg-gray-50 border border-gray-300 hover:border-gray-400 rounded-full shadow-md transition duration-150 flex items-center justify-center"
+            title="Gambar Sebelumnya (←)"
+            onclick="showPreviousImage()"
+        >
+            <svg class="w-4 h-4 text-gray-600 hover:text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+            </svg>
+        </button>
+
+        <!-- Tombol Next -->
+        <button 
+            id="nextImage" 
+            class="fixed right-6 top-1/2 -translate-y-1/2 z-60 w-10 h-10 bg-white hover:bg-gray-50 border border-gray-300 hover:border-gray-400 rounded-full shadow-md transition duration-150 flex items-center justify-center"
+            title="Gambar Selanjutnya (→)"
+            onclick="showNextImage()"
+        >
+            <svg class="w-4 h-4 text-gray-600 hover:text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
+        </button>
+
+        <!-- Image Counter -->
+        <div class="fixed top-6 left-6 z-60 bg-white border border-gray-300 px-4 py-2 rounded-full shadow-md text-sm font-medium text-gray-700">
+            <span id="imageCounter">1 / 10</span>
+        </div>
+
+        <!-- Gambar & Caption -->
+        <div class="flex flex-col items-center justify-center max-w-full max-h-full">
             
-            <!-- Close Button - Fixed Top Right -->
-            <button 
-                id="closeLightbox" 
-                class="fixed top-6 right-6 z-60 w-12 h-12 bg-white hover:bg-gray-50 border-2 border-gray-300 hover:border-gray-400 rounded-full shadow-lg transition-all duration-200 flex items-center justify-center group"
-                title="Tutup (Esc)"
-                onclick="closeLightboxModal()"
-            >
-                <svg class="w-6 h-6 text-gray-600 group-hover:text-gray-800 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                </svg>
-            </button>
-            
-            <!-- Image Counter - Fixed Top Left -->
-            <div class="fixed top-6 left-6 z-60 bg-white border-2 border-gray-300 px-4 py-2 rounded-full shadow-lg">
-                <span id="imageCounter" class="text-sm font-medium text-gray-700">1 / 10</span>
+            <!-- Gambar -->
+            <div class="bg-white rounded-xl shadow-xl border border-gray-200 overflow-hidden mb-6">
+                <img 
+                    id="lightboxImage" 
+                    src="" 
+                    alt="Lightbox Image" 
+                    class="max-w-[80vw] max-h-[70vh] object-contain"
+                >
             </div>
-            
-            <!-- Previous Navigation Button - No Bounce -->
-            <button 
-                id="prevImage" 
-                class="fixed left-6 top-1/2 transform -translate-y-1/2 z-60 w-10 h-10 bg-white hover:bg-gray-50 border-2 border-gray-300 hover:border-gray-400 rounded-full shadow-md transition-colors duration-150 flex items-center justify-center"
-                title="Gambar Sebelumnya (←)"
-                onclick="showPreviousImage()"
-            >
-                <svg class="w-4 h-4 text-gray-600 hover:text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
-                </svg>
-            </button>
-            
-            <!-- Next Navigation Button - No Bounce -->
-            <button 
-                id="nextImage" 
-                class="fixed right-6 top-1/2 transform -translate-y-1/2 z-60 w-10 h-10 bg-white hover:bg-gray-50 border-2 border-gray-300 hover:border-gray-400 rounded-full shadow-md transition-colors duration-150 flex items-center justify-center"
-                title="Gambar Selanjutnya (→)"
-                onclick="showNextImage()"
-            >
-                <svg class="w-4 h-4 text-gray-600 hover:text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                </svg>
-            </button>
-            
-            <!-- Main Image Content Area -->
-            <div class="flex flex-col items-center justify-center max-w-full max-h-full">
-                
-                <!-- Image Container -->
-                <div class="bg-white rounded-xl shadow-2xl border border-gray-200 overflow-hidden mb-6">
-                    <img 
-                        id="lightboxImage" 
-                        src="" 
-                        alt="" 
-                        class="max-w-[70vw] max-h-[70vh] object-contain"
-                        style="max-width: 70vw; max-height: 70vh;"
-                    >
-                </div>
-                
-                <!-- Image Information Panel -->
-                <div id="lightboxCaption" class="bg-white border-2 border-gray-300 rounded-xl shadow-lg p-6 max-w-[70vw] text-center">
-                    <!-- Caption content akan diisi oleh JavaScript -->
-                </div>
-                
+
+            <!-- Caption -->
+            <div id="lightboxCaption" class="bg-white border border-gray-300 rounded-xl shadow p-6 max-w-[80vw] text-center text-base text-gray-800">
+                <!-- Akan diisi via JavaScript -->
             </div>
         </div>
     </div>
+</div>
+
 
     <!-- JavaScript -->
     <script src="script.js"></script>
